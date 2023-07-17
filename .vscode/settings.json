@@ -1,0 +1,8 @@
+{
+    "editor.codeActionsOnSave": {
+        "sorce.fixAll.eslint": true
+    },
+    "eslint.validate": [
+        "javascript"
+    ]
+}
