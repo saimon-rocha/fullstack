@@ -1,0 +1,11 @@
+Projeto consiste em fixar o aprendizado sobre o curso FullStack da Udemy.
+
+Estrutura de pastas.
+src => Comporta as pastas de arquivos usados no Projeto
+app => Controllers e Middlewares
+configs => configurações do projeto como por exemplo Banco de dados
+database => configurações e migrations
+.env => Configurações do projeto
+routes => rotas da api
+server => configurações para rodar o projeto, configuração do servidor local
+===============================================================================
