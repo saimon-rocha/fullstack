@@ -8,4 +8,5 @@ database => configurações e migrations
 .env => Configurações do projeto
 routes => rotas da api
 server => configurações para rodar o projeto, configuração do servidor local
+sequelizerc => arquivo sequelize para localização dentro do projeto
 ===============================================================================
