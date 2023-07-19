@@ -21,4 +21,5 @@ class Users extends Model {
         return this;
     }
 }
+
 module.exports = Users;
