@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken')
 const Users = require('../models/Users')
+const { encrypt } = require('../../utils/crypt')
 
 class AuthenticationController {
     async authenticate(req, res) {
         const { email, user_name, password } = req.body;
-        
+
         let whereClause = {}
         if (email) {
             whereClause.email = { email }
@@ -22,11 +23,20 @@ class AuthenticationController {
             return res.status(401).json({ error: 'User not found' })
         }
 
-        if(!await user.checkPassword(password)){
-            return res.status(401).json({error: 'Password does not match!'})
+        if (!await user.checkPassword(password)) {
+            return res.status(401).json({ error: 'Password does not match!' })
         }
 
-        return res.status(200).json({ message: 'User exists!' })
+        const { id, user_name: userName } = user
+        const encryptId = encrypt(id)
+        const newId = `${iv}:${content}`;
+
+
+        const token = jwt.sign({ id }, process.env.HASH_BCRYPT, {
+            expiresIn: process.env.EXPIRE_IN
+        })
+
+        return res.status(200).json({ user: { id, user_name: userName }, token })
     }
 }
 
