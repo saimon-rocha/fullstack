@@ -1,0 +1,6 @@
+#Para se criar uma nova migration
+npx sequelize-cli migration:generate --name create-posts
+#Para migrar os dados
+npx sequelize-cli db:migrate
+#Reverter todas as migrations
+npx sequelize-cli db:migrate:undo
