@@ -7,6 +7,8 @@ const authSchema = require('./schema/auth.schema.json')
 const UserController = require('./apps/controllers/UserController')
 const userSchema = require('./schema/create.user.schema.json')
 const FileController = require('./apps/controllers/FileController')
+const PostController = require('./apps/controllers/PostController')
+const postSchema = require('./schema/post.schema.json')
 const routes = new Router();
 
 routes.post('/users', schemaValidator(userSchema), UserController.create);
@@ -19,5 +21,7 @@ routes.put('/user', UserController.update)
 routes.delete('/user', UserController.delete)
 routes.get('/user-profile', UserController.userProfile)
 routes.post('/upload', upload.single('image'), FileController.upload)
+routes.posts('/new-post', schemaValidator(postSchema), PostController.create)
+routes.delete('/delete-post/:id', PostController.delete)
 
 module.exports = routes;
