@@ -57,12 +57,39 @@ class PostController {
                 message: 'You do\t have permission to delete this post!'
             })
         }
-        const postUpdate = await Posts.update(req.body, {where:{id}})
-        if(postUpdate){
-            return res.status(400).json({message: 'Failed to update this post'})
+        const postUpdate = await Posts.update(req.body, { where: { id } })
+        if (postUpdate) {
+            return res.status(400).json({ message: 'Failed to update this post' })
         }
-        return res.status(200).json({message: 'Posts updated'})
+        return res.status(200).json({ message: 'Posts updated' })
 
+    }
+
+    async addlike(req, res) {
+        const { id } = req.params
+        const verifyPost = await Posts.findOne({
+            where: {
+                id,
+                // author_id: req.userId,
+            }
+        })
+
+        if (!verifyPost) {
+            return res.status(404).json({ message: 'Post does not exists' })
+        }
+
+        const postUpdate = await Posts.update({
+            number_likes: verifyPost.number_likes + 1
+        },
+            {
+                where: { id }
+            })
+
+        if (postUpdate) {
+            return res.status(400).json({ message: 'Failed to add Like in this post' })
+        }
+
+        return res.status(200).json({ message: 'like storaged!' })
     }
 }
 
