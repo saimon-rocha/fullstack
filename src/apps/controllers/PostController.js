@@ -31,14 +31,38 @@ class PostController {
             })
         }
         const deletedPost = await Posts.destroy({
-            where:{
+            where: {
                 id,
             }
         })
-        if(!deletedPost){
-            return res.status(400).json({message:'Failed to delete this post'})
+        if (!deletedPost) {
+            return res.status(400).json({ message: 'Failed to delete this post' })
         }
-        return res.status(200).json({message: 'Post deleted'})
+        return res.status(200).json({ message: 'Post deleted' })
+    }
+
+    async update(req, res) {
+        const { image, description } = req.body
+        const verifyPost = await Posts.findOne({
+            where: {
+                id,
+                // author_id: req.userId,
+            }
+        })
+        if (!verifyPost) {
+            return res.status(404).json({ message: 'Post does not exists' })
+        }
+        if (verifyPost.author_id != req.userId) {
+            return res.status(401).json({
+                message: 'You do\t have permission to delete this post!'
+            })
+        }
+        const postUpdate = await Posts.update(req.body, {where:{id}})
+        if(postUpdate){
+            return res.status(400).json({message: 'Failed to update this post'})
+        }
+        return res.status(200).json({message: 'Posts updated'})
+
     }
 }
 
