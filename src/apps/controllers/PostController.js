@@ -96,6 +96,9 @@ class PostController {
 
     async listMyPosts(req, res) {
         const allPosts = await Posts.findAll({
+            order: [
+                'id', 'desc'
+            ],
             where: {
                 author_id: req.userId,
             },
@@ -105,7 +108,7 @@ class PostController {
         }
         const { id, image, description, number_likes } = allPosts
         const formattedData = []
-        for(const item of allPosts){
+        for (const item of allPosts) {
             formattedData.push({
                 id: item.id,
                 image: item.image,
@@ -114,16 +117,20 @@ class PostController {
             })
         }
         return res.status(200).json({
-            data:formattedData
+            data: formattedData
         })
     }
 
-    async listMyPosts(req, res){
+    async listAllPosts(req, res) {
         const allPosts = await Posts.findAll({
+            order: [
+                'id', 'desc'
+            ],
             Attributes: ['id', 'description', 'image', 'number_likes'],
-            include:[
-                {   model: Users, 
-                    as:'users',
+            include: [
+                {
+                    model: Users,
+                    as: 'users',
                     required: true,
                     Attributes: ['id', 'user_name']
                 }
